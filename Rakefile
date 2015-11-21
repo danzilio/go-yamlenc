@@ -2,13 +2,15 @@ require 'rake'
 require 'rake/clean'
 require 'cucumber'
 require 'cucumber/rake/task'
-require 'rspec/core/rake_task'
-require 'bundler/gem_tasks'
 
 CLEAN.include('pkg/', 'tmp/')
 
-
-RSpec::Core::RakeTask.new(:spec)
 Cucumber::Rake::Task.new(:cucumber)
+
+source_files = Dir['*.go']
+
+task :build do
+  sh "go build -o bin/enc #{source_files.join ' '}"
+end
 
 task default: :cucumber
