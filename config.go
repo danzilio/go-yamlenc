@@ -1,7 +1,7 @@
 package main
 
 import "io/ioutil"
-import "gopkg.in/yaml.v2"
+import "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/gopkg.in/yaml.v2"
 
 type Config struct {
 	NodeList []string `yaml:"nodes"`

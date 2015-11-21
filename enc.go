@@ -1,7 +1,7 @@
 package main
 
 import "os"
-import "github.com/codegangsta/cli"
+import "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/github.com/codegangsta/cli"
 
 func ParseOpts(arguments []string) {
 	app := cli.NewApp()

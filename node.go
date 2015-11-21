@@ -2,7 +2,7 @@ package main
 
 import "strings"
 import "io/ioutil"
-import "gopkg.in/yaml.v2"
+import "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/gopkg.in/yaml.v2"
 
 type EncNode struct {
 	Role        string            `yaml:"role"`
