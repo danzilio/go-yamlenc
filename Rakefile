@@ -13,4 +13,8 @@ task :build do
   sh "go build -o bin/enc #{source_files.join ' '}"
 end
 
+task :test do
+  sh "go test"
+end
+
 task default: :cucumber
