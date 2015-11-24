@@ -37,17 +37,15 @@ func TestLookup(t *testing.T) {
 	node_list := Dir("test/fixtures/node", "\\.yaml$")
 
 	Convey("It should find dc1-puppet01", t, func() {
-		node, err := Lookup("dc1-puppet01", node_list)
-		So(err, ShouldBeNil)
-		So(node, ShouldNotBeEmpty)
+		node := Lookup("dc1-puppet01", node_list)
+		So(node, ShouldNotBeNil)
 		So(node.Role, ShouldEqual, "roles::puppet::master")
 		So(node.Environment, ShouldEqual, "production")
 	})
 
 	Convey("It should find dc1-puppetdb01.example.com", t, func() {
-		node, err := Lookup("dc1-puppetdb01.example.com", node_list)
-		So(err, ShouldBeNil)
-		So(node, ShouldNotBeEmpty)
+		node := Lookup("dc1-puppetdb01.example.com", node_list)
+		So(node, ShouldNotBeNil)
 		So(node.Role, ShouldEqual, "roles::puppet::puppetdb")
 		So(node.Environment, ShouldEqual, "stage")
 		So("base", ShouldBeIn, node.Classes)

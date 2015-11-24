@@ -4,7 +4,6 @@ import "os"
 import "fmt"
 import "io/ioutil"
 import "regexp"
-import "errors"
 import "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/github.com/codegangsta/cli"
 
 func main() {
@@ -59,9 +58,9 @@ func main() {
 			os.Exit(1)
 		}
 
-		node, error := Lookup(c.Args()[0], node_list)
+		node := Lookup(c.Args()[0], node_list)
 
-		if error == nil {
+		if node != nil {
 			puppet_node := node.ToPuppetNode()
 			fmt.Println(puppet_node.String())
 		} else {
@@ -123,22 +122,22 @@ func CollectNodes(nodes []string) []string {
 	return collection
 }
 
-func Lookup(name string, nodes []string) (EncNode, error) {
+func Lookup(name string, nodes []string) *EncNode {
 	for _, node := range nodes {
-		found, error := search(name, Nodes(node))
-		if error == nil {
-			return found, nil
+		found := search(name, Nodes(node))
+		if found != nil {
+			return found
 		}
 	}
-	return EncNode{}, errors.New("No node found!")
+	return nil
 }
 
-func search(name string, nodes map[string]EncNode) (EncNode, error) {
+func search(name string, nodes map[string]EncNode) *EncNode {
 	for node_name, enc_node := range nodes {
 		match, _ := regexp.MatchString(node_name, name)
 		if match == true {
-			return enc_node, nil
+			return &enc_node
 		}
 	}
-	return EncNode{}, errors.New("No node found!")
+	return nil
 }
