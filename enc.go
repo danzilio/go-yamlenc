@@ -43,7 +43,7 @@ func main() {
 		}
 
 		if len(c.Args()) == 0 {
-			fmt.Println("ERROR: Didn't specify a node name to look up!")
+			fmt.Fprintf(os.Stderr, "ERROR: Didn't specify a node name to look up!")
 			os.Exit(1)
 		}
 
@@ -54,7 +54,7 @@ func main() {
 		node_list := CollectNodes(config.NodeList)
 
 		if len(config.NodeList) == 0 {
-			fmt.Println("No node files specified")
+			fmt.Fprintf(os.Stderr, "No node files specified")
 			os.Exit(1)
 		}
 
@@ -65,7 +65,7 @@ func main() {
 			fmt.Println(puppet_node.String())
 		} else {
 			if fail == true {
-				fmt.Println("No node found.")
+				fmt.Fprintf(os.Stderr, "No node found.")
 				os.Exit(1)
 			} else {
 				fmt.Println("{}")
