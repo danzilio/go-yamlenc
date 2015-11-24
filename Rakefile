@@ -15,6 +15,8 @@ end
 
 task :test do
   sh "go test"
+  Rake::Task[:build].execute
+  Rake::Task[:cucumber].execute
 end
 
-task default: :cucumber
+task default: :test

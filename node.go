@@ -49,3 +49,8 @@ func (n *EncNode) ToPuppetNode() PuppetNode {
 	node.Environment = n.Environment
 	return node
 }
+
+func (n *PuppetNode) String() string {
+	data, _ := yaml.Marshal(n)
+	return string(data)
+}
