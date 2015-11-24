@@ -109,12 +109,14 @@ func CollectNodes(nodes []string) []string {
 
 	for _, node := range nodes {
 		info, err := os.Stat(node)
-		if err == nil && info.IsDir() == true {
-			for _, file := range Dir(node, "\\.yaml$") {
-				collection = append(collection, file)
+		if err == nil {
+			if info.IsDir() == true {
+				for _, file := range Dir(node, "\\.yaml$") {
+					collection = append(collection, file)
+				}
+			} else {
+				collection = append(collection, node)
 			}
-		} else {
-			collection = append(collection, node)
 		}
 	}
 
