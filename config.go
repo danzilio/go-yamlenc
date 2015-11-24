@@ -31,7 +31,7 @@ func (n *NodeList) UnmarshalYAML(unmarshal func(interface{}) error) error {
 func (c *Config) Load(path string) error {
 	data, err := ioutil.ReadFile(path)
 	if err == nil {
-		err = yaml.Unmarshal([]byte(data), &c)
+		err = yaml.Unmarshal([]byte(data), c)
 	}
 	return err
 }
