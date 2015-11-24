@@ -1,0 +1,4 @@
+---
+dc4-www01:
+  classes:
+    - apache

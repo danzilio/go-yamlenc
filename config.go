@@ -8,10 +8,23 @@ type Config struct {
 	Fail     bool     `yaml:"fail"`
 }
 
+type StringNode struct {
+	NodeList string `yaml:"nodes"`
+	Fail     bool   `yaml:"fail"`
+}
+
 func (c *Config) Load(path string) error {
 	data, err := ioutil.ReadFile(path)
 	if err == nil {
-		yaml.Unmarshal([]byte(data), &c)
+		err = yaml.Unmarshal([]byte(data), &c)
+		if err != nil {
+			string_node := StringNode{}
+			err = yaml.Unmarshal([]byte(data), &string_node)
+			if err == nil {
+				c.NodeList = append(c.NodeList, string_node.NodeList)
+				c.Fail = string_node.Fail
+			}
+		}
 	}
 	return err
 }

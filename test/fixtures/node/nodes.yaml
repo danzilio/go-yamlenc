@@ -1,0 +1,16 @@
+---
+^(dc1|dc2)-puppet01$:
+  environment: production
+  role: roles::puppet::master
+dc1-puppetdb01:
+  environment: stage
+  role: roles::puppet::puppetdb
+  classes:
+    - base
+    - ntp
+dc4-server01:
+  classes:
+    - base
+dc4-server02:
+  parameters:
+    param: value
