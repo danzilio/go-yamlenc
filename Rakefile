@@ -14,7 +14,7 @@ task :build do
 end
 
 task :test do
-  sh "go test"
+  sh "go test -v"
   Rake::Task[:build].execute
   Rake::Task[:cucumber].execute
 end

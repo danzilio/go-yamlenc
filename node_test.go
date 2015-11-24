@@ -1,8 +1,10 @@
 package main
 
-import "testing"
-import "reflect"
-import "regexp"
+import (
+	. "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/github.com/smartystreets/goconvey/convey"
+	"regexp"
+	"testing"
+)
 
 func TestPuppetNode(t *testing.T) {
 	params := make(map[string]string)
@@ -17,21 +19,25 @@ func TestPuppetNode(t *testing.T) {
 
 	node := subject.ToPuppetNode()
 
-	if node.Environment != "production" {
-		t.Error("Expected environment to be Production")
-	}
+	Convey("The node's environment should be production", t, func() {
+		So(node.Environment, ShouldEqual, "production")
+	})
 
-	if node.Parameters["role"] != "foo/bar" {
-		t.Error("Expected role to be foo/bar")
-	}
+	Convey("The node's role should be foo/bar", t, func() {
+		So(node.Parameters["role"], ShouldEqual, "foo/bar")
+	})
 
-	if len(node.Classes) != 2 {
-		t.Error("Expected len(node.Classes) to be 2!")
-	}
+	Convey("The node should have two classes", t, func() {
+		So(len(node.Classes), ShouldEqual, 2)
+	})
 
-	if !reflect.DeepEqual([]string{"foo::bar", "roles::foo::bar"}, node.Classes) {
-		t.Error("Expected node.Classes to have 'foo::bar' and 'roles::foo::bar' only!")
-	}
+	Convey("The node should have foo::bar in its class array", t, func() {
+		So("foo::bar", ShouldBeIn, node.Classes)
+	})
+
+	Convey("The node should have roles::foo::bar in its class array", t, func() {
+		So("roles::foo::bar", ShouldBeIn, node.Classes)
+	})
 }
 
 func TestString(t *testing.T) {
@@ -48,33 +54,33 @@ func TestString(t *testing.T) {
 	node := subject.ToPuppetNode()
 	string_node := node.String()
 
-	match, _ := regexp.MatchString("classes:\\s+.*\\s*- foo::bar", string_node)
-	if match != true {
-		t.Error("Expected foo::bar class in stringified node.")
-	}
+	Convey("The node should have foo::bar in its class array", t, func() {
+		match, _ := regexp.MatchString("classes:\\s+.*\\s*- foo::bar", string_node)
+		So(match, ShouldBeTrue)
+	})
 
-	match, _ = regexp.MatchString("classes:\\s+.*\\s*- roles::foo::bar", string_node)
-	if match != true {
-		t.Error("Expected roles::foo::bar class in stringified node.")
-	}
+	Convey("The node should have roles::foo::bar in its class array", t, func() {
+		match, _ := regexp.MatchString("classes:\\s+.*\\s*- roles::foo::bar", string_node)
+		So(match, ShouldBeTrue)
+	})
 
-	match, _ = regexp.MatchString("environment:\\s+production", string_node)
-	if match != true {
-		t.Error("Unexpected or missing Environment in stringified node.")
-	}
+	Convey("The node's environment should be production", t, func() {
+		match, _ := regexp.MatchString("environment:\\s+production", string_node)
+		So(match, ShouldBeTrue)
+	})
 
-	match, _ = regexp.MatchString("parameters:\\s+(\\s+.*)+rack:\\s+r5", string_node)
-	if match != true {
-		t.Error("Unexpected or missing rack parameter in stringified node.")
-	}
+	Convey("The node's rack paramter should be set to r5", t, func() {
+		match, _ := regexp.MatchString("parameters:\\s+(\\s+.*)+rack:\\s+r5", string_node)
+		So(match, ShouldBeTrue)
+	})
 
-	match, _ = regexp.MatchString("parameters:\\s+(\\s+.*)+elevation:\\s+\"5\"", string_node)
-	if match != true {
-		t.Error("Unexpected or missing elevation parameter found in stringified node.")
-	}
+	Convey("The node's elevation parameter should be set to 5", t, func() {
+		match, _ := regexp.MatchString("parameters:\\s+(\\s+.*)+elevation:\\s+\"5\"", string_node)
+		So(match, ShouldBeTrue)
+	})
 
-	match, _ = regexp.MatchString("parameters:\\s+(\\s+.*)+role:\\s+foo/bar", string_node)
-	if match != true {
-		t.Error("Unexpected or missing role parameter found in stringified node.")
-	}
+	Convey("The node's role parameter should be set to foo/bar", t, func() {
+		match, _ := regexp.MatchString("parameters:\\s+(\\s+.*)+role:\\s+foo/bar", string_node)
+		So(match, ShouldBeTrue)
+	})
 }
