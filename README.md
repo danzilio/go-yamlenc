@@ -1,5 +1,7 @@
 # YAML ENC
 
+[![Build Status](https://travis-ci.org/danzilio/go-yamlenc.svg?branch=master)](https://travis-ci.org/danzilio/go-yamlenc)
+
 This is an external node classifier (ENC) for Puppet. This ENC reads from YAML
 files and returns a node statement for Puppet to consume. There is a specific
 schema for the YAML input.
