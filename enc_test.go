@@ -6,31 +6,31 @@ import (
 )
 
 func TestCollectNodes(t *testing.T) {
-  var node_list []string
+	var node_list []string
 
-  node_list = append(node_list, "test/fixtures/node")
+	node_list = append(node_list, "test/fixtures/node")
 
-  node_list = CollectNodes(node_list)
+	node_list = CollectNodes(node_list)
 
-  Convey("The collection should include nodes.yaml", t, func() {
-    So("test/fixtures/node/nodes.yaml", ShouldBeIn, node_list)
-  })
+	Convey("The collection should include nodes.yaml", t, func() {
+		So("test/fixtures/node/nodes.yaml", ShouldBeIn, node_list)
+	})
 }
 
 func TestDir(t *testing.T) {
-  node_list := Dir("test/fixtures", "\\.yaml$")
+	node_list := Dir("test/fixtures", "\\.yaml$")
 
-  Convey("The collection should include fixtures/node/nodes.yaml", t, func() {
-    So("test/fixtures/node/nodes.yaml", ShouldBeIn, node_list)
-  })
+	Convey("The collection should include fixtures/node/nodes.yaml", t, func() {
+		So("test/fixtures/node/nodes.yaml", ShouldBeIn, node_list)
+	})
 
-  Convey("The collection should include fixtures/node/foo/bar.yaml", t, func() {
-    So("test/fixtures/node/foo/bar.yaml", ShouldBeIn, node_list)
-  })
+	Convey("The collection should include fixtures/node/foo/bar.yaml", t, func() {
+		So("test/fixtures/node/foo/bar.yaml", ShouldBeIn, node_list)
+	})
 
-  Convey("The collection should not include directories", t, func() {
-    So("test/fixtures/node/foo", ShouldNotBeIn, node_list)
-  })
+	Convey("The collection should not include directories", t, func() {
+		So("test/fixtures/node/foo", ShouldNotBeIn, node_list)
+	})
 }
 
 func TestLookup(t *testing.T) {

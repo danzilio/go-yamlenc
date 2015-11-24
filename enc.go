@@ -132,7 +132,7 @@ func Lookup(name string, nodes []string) (EncNode, error) {
 }
 
 func search(name string, nodes map[string]EncNode) (EncNode, error) {
-  for node_name, enc_node := range nodes {
+	for node_name, enc_node := range nodes {
 		match, _ := regexp.MatchString(node_name, name)
 		if match == true {
 			return enc_node, nil
