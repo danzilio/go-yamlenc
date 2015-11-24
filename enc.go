@@ -7,7 +7,7 @@ import "regexp"
 import "errors"
 import "github.com/danzilio/go-yamlenc/Godeps/_workspace/src/github.com/codegangsta/cli"
 
-func ParseOpts(arguments []string) {
+func main() {
 	app := cli.NewApp()
 	app.Name = "yamlenc"
 	app.Usage = "A very simple external node classifier (ENC) for Puppet"
@@ -74,7 +74,7 @@ func ParseOpts(arguments []string) {
 		}
 	}
 
-	app.Run(arguments)
+	app.Run(os.Args)
 }
 
 func Dir(dir string, regex string) []string {
@@ -139,8 +139,4 @@ func search(name string, nodes map[string]EncNode) (EncNode, error) {
 		}
 	}
 	return EncNode{}, errors.New("No node found!")
-}
-
-func main() {
-	ParseOpts(os.Args)
 }
