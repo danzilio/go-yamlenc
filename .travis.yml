@@ -1,0 +1,13 @@
+language: go
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install curl
+  - curl -L https://get.rvm.io | bash -s stable
+  - source ~/.rvm/scripts/rvm
+  - rvm requirements
+  - rvm install 2.2.0
+  - rvm use 2.2.0 --default
+script:
+  - go test -v .
+  - bundle install && bundle exec rake build
+  - bundle exec rake cucumber
